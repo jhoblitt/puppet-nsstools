@@ -33,25 +33,26 @@ define nssdb::add_cert_and_key (
   # downcase and change spaces into _s
   $pkcs12_name = downcase(regsubst("${nickname}.p12", '[\s]', '_', 'GM'))
 
-  exec {'generate_pkcs12':
+  exec {"generate_pkcs12_${title}":
     command     => "/usr/bin/openssl pkcs12 -export -in ${cert} -inkey ${key} -password 'file:${certdir}/password.conf' -out '${certdir}/${pkcs12_name}' -name '${nickname}'",
     require     => [
       File["${certdir}/password.conf"],
       File["${certdir}/cert8.db"],
       Class['nssdb'],
     ],
-    before      => Exec['load_pkcs12'],
-    notify      => Exec['load_pkcs12'],
     subscribe   => File["${certdir}/password.conf"],
     refreshonly => true,
   }
 
-  exec {'load_pkcs12':
-    command     => "/usr/bin/pk12util -i '${certdir}/${pkcs12_name}' -d '${certdir}' -w '${certdir}/password.conf' -k '${certdir}/password.conf'",
-    require     => [
-      Exec['generate_pkcs12'],
+  exec { "add_pkcs12_${title}":
+    path      => ['/usr/bin'],
+    command   => "pk12util -d ${certdir} -i ${certdir}/${pkcs12_name} -w ${certdir}/password.conf -k ${certdir}/password.conf",
+    unless    => "certutil -d ${certdir} -L -n '${nickname}'",
+    logoutput => true,
+    require   => [
+      Exec["generate_pkcs12_${title}"],
       Class['nssdb'],
-    ],
-    refreshonly => true,
+    ]
   }
+
 }

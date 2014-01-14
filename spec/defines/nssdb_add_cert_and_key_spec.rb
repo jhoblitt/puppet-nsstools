@@ -12,7 +12,7 @@ describe 'nssdb::add_cert_and_key', :type => :define do
 
   context 'generate_pkcs12' do
     it do
-      should contain_exec('generate_pkcs12').with(
+      should contain_exec('generate_pkcs12_/dne').with(
         :command   => "/usr/bin/openssl pkcs12 -export -in /tmp/server.cert -inkey /tmp/server.key -password 'file:/dne/password.conf' -out '/dne/server-cert.p12' -name 'Server-Cert'",
         :require   => [
           'File[/dne/password.conf]',
@@ -24,12 +24,15 @@ describe 'nssdb::add_cert_and_key', :type => :define do
     end
   end
 
-  context 'load_pkcs12' do
+  context 'add_pkcs12' do
     it do
-      contain_exec('load_pkcs12').with(
-        :command => "/usr/bin/pk12util -i '/dne/${pkcs12_name}' -d '/dne' -w '/dne/password.conf' -k '/dne/password.conf'",
-        :require => [
-          'Exec[generate_pkcs12]',
+      should contain_exec('add_pkcs12_/dne').with(
+        :path      => ['/usr/bin'],
+        :command   => "pk12util -d /dne -i /dne/server-cert.p12 -w /dne/password.conf -k /dne/password.conf",
+        :unless    => "certutil -d /dne -L -n 'Server-Cert'",
+        :logoutput => true,
+        :require   => [
+          'Exec[generate_pkcs12_/dne]',
           'Class[Nssdb]'
         ]
       )
