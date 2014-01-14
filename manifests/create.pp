@@ -1,11 +1,12 @@
 # Create an empty NSS database with a password file.
 #
 # Parameters:
-#   $dbname           - required - the directory to store the db
 #   $owner_id         - required - the file/directory user
 #   $group_id         - required - the file/directory group
 #   $password         - required - password to set on the database
-#   $basedir          - optional - defaults to /etc/pki
+#   $mode             - optional - defaults to '0600'
+#   $certdir          - optional - defaults to $title
+#   $certdir_mode     - optional - defaults to '0700'
 #   $cacert           - optional - path to CA certificate in PEM format
 #   $canickname       - default CA nickname
 #   $catrust          - default CT,CT,
@@ -15,7 +16,6 @@
 #      cert8.db, key3.db, secmod.db and a password file, password.conf
 #
 # Requires:
-#   $dbname must be set
 #   $owner_id must be set
 #   $group_id must be set
 #   $password must be set
@@ -30,64 +30,72 @@
 # This will create an NSS database in /etc/pki/test
 #
 define nssdb::create (
-  $dbname = $title,
   $owner_id,
   $group_id,
   $password,
-  $mode    = '0600',
-  $basedir = '/etc/pki',
-  $cacert = '/etc/pki/certs/CA/ca.crt',
-  $canickname = 'CA',
-  $catrust = 'CT,CT,'
+  $mode           = '0600',
+  $certdir        = $title,
+  $certdir_mode   = '0700',
+  $manage_certdir = true,
+  $cacert         = '/etc/pki/certs/CA/ca.crt',
+  $canickname     = 'CA',
+  $catrust        = 'CT,CT,'
 ) {
   package { 'nss-tools': ensure => present }
 
-  file {"${basedir}/${dbname}":
-    ensure  => directory,
-    mode    => 0600,
-    owner   => $owner_id,
-    group   => $group_id,
+  if $manage_certdir {
+    file { $certdir:
+      ensure  => directory,
+      mode    => $certdir_mode,
+      owner   => $owner_id,
+      group   => $group_id,
+    }
   }
-  file {"${basedir}/${dbname}/password.conf":
+
+  file { "${certdir}/password.conf":
     ensure  => file,
     mode    => $mode,
     owner   => $owner_id,
     group   => $group_id,
     content => $password,
     require => [
-        File["${basedir}/${dbname}"],
+      File[$certdir],
     ],
   }
-  file { ["${basedir}/${dbname}/cert8.db", "${basedir}/${dbname}/key3.db", "${basedir}/${dbname}/secmod.db"] :
+  file { [
+    "${certdir}/cert8.db",
+    "${certdir}/key3.db",
+    "${certdir}/secmod.db"
+  ]:
     ensure  => file,
     mode    => $mode,
     owner   => $owner_id,
     group   => $group_id,
     require => [
-        File["${basedir}/${dbname}/password.conf"],
-        Exec['create_nss_db'],
+      File["${certdir}/password.conf"],
+      Exec['create_nss_db'],
     ],
   }
 
   exec {'create_nss_db':
-    command => "/usr/bin/certutil -N -d ${basedir}/${dbname} -f ${basedir}/${dbname}/password.conf",
-    creates => ["${basedir}/${dbname}/cert8.db", "${basedir}/${dbname}/key3.db", "${basedir}/${dbname}/secmod.db"],
+    command => "/usr/bin/certutil -N -d ${certdir} -f ${certdir}/password.conf",
+    creates => ["${certdir}/cert8.db", "${certdir}/key3.db", "${certdir}/secmod.db"],
     require => [
-        File["${basedir}/${dbname}"],
-        File["${basedir}/${dbname}/password.conf"],
-        Package['nss-tools'],
+      File[$certdir],
+      File["${certdir}/password.conf"],
+      Package['nss-tools'],
     ],
-      notify => [
-        Exec["add_ca_cert"],
-      ],
+    notify  => [
+      Exec['add_ca_cert'],
+    ],
   }
 
   exec {'add_ca_cert':
-    command => "/usr/bin/certutil -A -n ${canickname} -d ${basedir}/${dbname} -t ${catrust} -a -i ${cacert}",
-    require => [
-        Package['nss-tools'],
+    command     => "/usr/bin/certutil -A -n ${canickname} -d ${certdir} -t ${catrust} -a -i ${cacert}",
+    require     => [
+      Package['nss-tools'],
     ],
     refreshonly => true,
-    onlyif => "/usr/bin/test -e $cacert",
+    onlyif      => "/usr/bin/test -e ${cacert}",
   }
 }
