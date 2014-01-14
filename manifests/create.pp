@@ -36,10 +36,7 @@ define nssdb::create (
   $mode           = '0600',
   $certdir        = $title,
   $certdir_mode   = '0700',
-  $manage_certdir = true,
-  $cacert         = '/etc/pki/certs/CA/ca.crt',
-  $canickname     = 'CA',
-  $catrust        = 'CT,CT,'
+  $manage_certdir = true
 ) {
   include nssdb
 
@@ -84,18 +81,6 @@ define nssdb::create (
       File[$certdir],
       File["${certdir}/password.conf"],
       Class['nssdb'],
-    ],
-    notify  => [
-      Exec['add_ca_cert'],
-    ],
-  }
-
-  exec {'add_ca_cert':
-    command     => "/usr/bin/certutil -A -n ${canickname} -d ${certdir} -t ${catrust} -a -i ${cacert}",
-    require     => [
-      Class['nssdb'],
-    ],
-    refreshonly => true,
-    onlyif      => "/usr/bin/test -e ${cacert}",
+    ]
   }
 }

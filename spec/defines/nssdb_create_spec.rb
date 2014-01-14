@@ -64,15 +64,6 @@ describe 'nssdb::create', :type => :define do
         )
       end
     end
-
-    context 'add ca cert' do
-      it do
-        should contain_exec('add_ca_cert').with(
-          :command => '/usr/bin/certutil -A -n CA -d /obsolete -t CT,CT, -a -i /etc/pki/certs/CA/ca.crt',
-          :onlyif  => '/usr/bin/test -e /etc/pki/certs/CA/ca.crt',
-        )
-      end
-    end
   end # default params
 
   context 'all params' do
@@ -85,9 +76,6 @@ describe 'nssdb::create', :type => :define do
         :password       => 'secret',
         :manage_certdir => false,
         :certdir_mode   => '0770',
-        :cacert         => '/ca.crt',
-        :canickname     => 'ca',
-        :catrust        => 'CTu'
       }
     end
 
@@ -135,15 +123,6 @@ describe 'nssdb::create', :type => :define do
             'File[/obsolete/password.conf]',
             'Class[Nssdb]'
           ]
-        )
-      end
-    end
-
-    context 'add ca cert' do
-      it do
-        should contain_exec('add_ca_cert').with(
-          :command => %r{-n ca -d /obsolete -t CTu.*-i /ca.crt},
-          :onlyif  => %r{-e /ca.crt}
         )
       end
     end
