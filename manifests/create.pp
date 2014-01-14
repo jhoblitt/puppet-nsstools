@@ -41,7 +41,7 @@ define nssdb::create (
   $canickname     = 'CA',
   $catrust        = 'CT,CT,'
 ) {
-  package { 'nss-tools': ensure => present }
+  include nssdb
 
   if $manage_certdir {
     file { $certdir:
@@ -83,7 +83,7 @@ define nssdb::create (
     require => [
       File[$certdir],
       File["${certdir}/password.conf"],
-      Package['nss-tools'],
+      Class['nssdb'],
     ],
     notify  => [
       Exec['add_ca_cert'],
@@ -93,7 +93,7 @@ define nssdb::create (
   exec {'add_ca_cert':
     command     => "/usr/bin/certutil -A -n ${canickname} -d ${certdir} -t ${catrust} -a -i ${cacert}",
     require     => [
-      Package['nss-tools'],
+      Class['nssdb'],
     ],
     refreshonly => true,
     onlyif      => "/usr/bin/test -e ${cacert}",

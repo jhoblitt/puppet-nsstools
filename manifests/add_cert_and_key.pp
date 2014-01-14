@@ -28,7 +28,7 @@ define nssdb::add_cert_and_key (
   $key,
   $certdir = $title
 ) {
-  package { 'openssl': ensure => present }
+  include nssdb
 
   # downcase and change spaces into _s
   $pkcs12_name = downcase(regsubst("${nickname}.p12", '[\s]', '_', 'GM'))
@@ -38,7 +38,7 @@ define nssdb::add_cert_and_key (
     require     => [
       File["${certdir}/password.conf"],
       File["${certdir}/cert8.db"],
-      Package['openssl'],
+      Class['nssdb'],
     ],
     before      => Exec['load_pkcs12'],
     notify      => Exec['load_pkcs12'],
@@ -50,7 +50,7 @@ define nssdb::add_cert_and_key (
     command     => "/usr/bin/pk12util -i '${certdir}/${pkcs12_name}' -d '${certdir}' -w '${certdir}/password.conf' -k '${certdir}/password.conf'",
     require     => [
       Exec['generate_pkcs12'],
-      Package['nss-tools'],
+      Class['nssdb'],
     ],
     refreshonly => true,
   }

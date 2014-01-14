@@ -7,4 +7,4 @@ summary 'NSS database Puppet Module'
 description 'This module manages NSS databases.'
 project_page 'https://github.com/rcritten/puppet-nssdb'
 
-dependency 'puppetlabs/stdlib', '>= 3.0.0'
+dependency 'puppetlabs/stdlib', '>= 4.0.0'

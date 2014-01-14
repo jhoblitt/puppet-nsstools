@@ -17,7 +17,7 @@ describe 'nssdb::add_cert_and_key', :type => :define do
         :require   => [
           'File[/dne/password.conf]',
           'File[/dne/cert8.db]',
-          'Package[openssl]'
+          'Class[Nssdb]'
         ],
         :subscribe => 'File[/dne/password.conf]'
       )
@@ -27,7 +27,11 @@ describe 'nssdb::add_cert_and_key', :type => :define do
   context 'load_pkcs12' do
     it do
       contain_exec('load_pkcs12').with(
-        :command => "/usr/bin/pk12util -i '/dne/${pkcs12_name}' -d '/dne' -w '/dne/password.conf' -k '/dne/password.conf'"
+        :command => "/usr/bin/pk12util -i '/dne/${pkcs12_name}' -d '/dne' -w '/dne/password.conf' -k '/dne/password.conf'",
+        :require => [
+          'Exec[generate_pkcs12]',
+          'Class[Nssdb]'
+        ]
       )
     end
   end

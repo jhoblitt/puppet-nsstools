@@ -59,7 +59,7 @@ describe 'nssdb::create', :type => :define do
           :require => [
             'File[/obsolete]',
             'File[/obsolete/password.conf]',
-            'Package[nss-tools]'
+            'Class[Nssdb]'
           ]
         )
       end
@@ -133,7 +133,7 @@ describe 'nssdb::create', :type => :define do
           :require => [
             'File[/obsolete]',
             'File[/obsolete/password.conf]',
-            'Package[nss-tools]'
+            'Class[Nssdb]'
           ]
         )
       end
