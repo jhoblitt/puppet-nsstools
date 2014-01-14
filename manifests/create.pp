@@ -34,6 +34,7 @@ define nssdb::create (
   $owner_id,
   $group_id,
   $password,
+  $mode    = '0600',
   $basedir = '/etc/pki',
   $cacert = '/etc/pki/certs/CA/ca.crt',
   $canickname = 'CA',
@@ -49,7 +50,7 @@ define nssdb::create (
   }
   file {"${basedir}/${dbname}/password.conf":
     ensure  => file,
-    mode    => 0600,
+    mode    => $mode,
     owner   => $owner_id,
     group   => $group_id,
     content => $password,
@@ -59,7 +60,7 @@ define nssdb::create (
   }
   file { ["${basedir}/${dbname}/cert8.db", "${basedir}/${dbname}/key3.db", "${basedir}/${dbname}/secmod.db"] :
     ensure  => file,
-    mode    => 0600,
+    mode    => $mode,
     owner   => $owner_id,
     group   => $group_id,
     require => [

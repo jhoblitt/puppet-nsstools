@@ -5,6 +5,7 @@ describe 'nssdb::create', :type => :define do
     let(:params) do {
         :owner_id   => 'nobody',
         :group_id   => 'nobody',
+        :mode       => '0660',
         :password   => 'secret',
         :basedir    => '/obsolete',
         :cacert     => '/ca.crt',
@@ -24,6 +25,7 @@ describe 'nssdb::create', :type => :define do
         it{ should contain_file('/obsolete/test/password.conf').with(
             :owner   => 'nobody',
             :group   => 'nobody',
+            :mode    => '0660',
             :content => 'secret',
             :require => 'File[/obsolete/test]'
         )}
@@ -35,6 +37,7 @@ describe 'nssdb::create', :type => :define do
             it{ should contain_file('/obsolete/test/' + db).with(
                 :owner   => 'nobody',
                 :group   => 'nobody',
+                :mode    => '0660',
                 :require => [ 'File[/obsolete/test/password.conf]', 'Exec[create_nss_db]']
             )}
         end
