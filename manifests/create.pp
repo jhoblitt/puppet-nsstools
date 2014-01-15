@@ -45,6 +45,11 @@ define nssdb::create (
       owner   => $owner_id,
       group   => $group_id,
     }
+
+    $require_certdir = File[$certdir]
+
+  } else {
+    $require_certdir = undef
   }
 
   file { "${certdir}/password.conf":
@@ -53,10 +58,9 @@ define nssdb::create (
     owner   => $owner_id,
     group   => $group_id,
     content => $password,
-    require => [
-      File[$certdir],
-    ],
+    require => $require_certdir,
   }
+
   file { [
     "${certdir}/cert8.db",
     "${certdir}/key3.db",
@@ -76,7 +80,6 @@ define nssdb::create (
     command => "/usr/bin/certutil -N -d ${certdir} -f ${certdir}/password.conf",
     creates => ["${certdir}/cert8.db", "${certdir}/key3.db", "${certdir}/secmod.db"],
     require => [
-      File[$certdir],
       File["${certdir}/password.conf"],
       Class['nssdb'],
     ]
