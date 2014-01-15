@@ -34,6 +34,7 @@ define nssdb::add_cert(
     unless    => "certutil -d ${certdir} -L -n '${nickname}'",
     logoutput => true,
     require   => [
+      Nssdb::Create[$certdir],
       Class['nssdb'],
     ],
   }

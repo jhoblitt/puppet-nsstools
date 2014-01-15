@@ -5,11 +5,7 @@
 #   $group_id         - required - the file/directory group
 #   $password         - required - password to set on the database
 #   $mode             - optional - defaults to '0600'
-#   $certdir          - optional - defaults to $title
 #   $certdir_mode     - optional - defaults to '0700'
-#   $cacert           - optional - path to CA certificate in PEM format
-#   $canickname       - default CA nickname
-#   $catrust          - default CT,CT,
 #
 # Actions:
 #   creates a new NSS database, consisting of 4 files:
@@ -34,11 +30,13 @@ define nssdb::create (
   $group_id,
   $password,
   $mode           = '0600',
-  $certdir        = $title,
   $certdir_mode   = '0700',
   $manage_certdir = true
 ) {
   include nssdb
+
+  validate_absolute_path($title)
+  $certdir = $title
 
   if $manage_certdir {
     file { $certdir:

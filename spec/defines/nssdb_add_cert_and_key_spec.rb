@@ -15,8 +15,7 @@ describe 'nssdb::add_cert_and_key', :type => :define do
       should contain_exec('generate_pkcs12_/dne').with(
         :command   => "/usr/bin/openssl pkcs12 -export -in /tmp/server.cert -inkey /tmp/server.key -password 'file:/dne/password.conf' -out '/dne/server-cert.p12' -name 'Server-Cert'",
         :require   => [
-          'File[/dne/password.conf]',
-          'File[/dne/cert8.db]',
+          'Nssdb::Create[/dne]',
           'Class[Nssdb]'
         ],
         :subscribe => 'File[/dne/password.conf]'
@@ -33,6 +32,7 @@ describe 'nssdb::add_cert_and_key', :type => :define do
         :logoutput => true,
         :require   => [
           'Exec[generate_pkcs12_/dne]',
+          'Nssdb::Create[/dne]',
           'Class[Nssdb]'
         ]
       )
