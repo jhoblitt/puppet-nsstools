@@ -72,11 +72,11 @@ define nssdb::create (
     group   => $group_id,
     require => [
       File["${certdir}/password.conf"],
-      Exec['create_nss_db'],
+      Exec["create_nss_db_${title}"],
     ],
   }
 
-  exec {'create_nss_db':
+  exec { "create_nss_db_${title}":
     command => "/usr/bin/certutil -N -d ${certdir} -f ${certdir}/password.conf",
     creates => ["${certdir}/cert8.db", "${certdir}/key3.db", "${certdir}/secmod.db"],
     require => [

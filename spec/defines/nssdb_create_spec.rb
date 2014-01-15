@@ -43,7 +43,7 @@ describe 'nssdb::create', :type => :define do
             :mode    => '0600',
             :require => [
               'File[/obsolete/password.conf]',
-              'Exec[create_nss_db]',
+              'Exec[create_nss_db_/obsolete]',
             ]
           )
         end
@@ -52,7 +52,7 @@ describe 'nssdb::create', :type => :define do
 
     context 'create nss db' do
       it do
-        should contain_exec('create_nss_db').with(
+        should contain_exec('create_nss_db_/obsolete').with(
           :command => %r{-d /obsolete -f /obsolete},
           :creates => [
             '/obsolete/cert8.db',
@@ -104,7 +104,7 @@ describe 'nssdb::create', :type => :define do
             :owner   => 'nobody',
             :group   => 'nobody',
             :mode    => '0660',
-            :require => [ 'File[/obsolete/password.conf]', 'Exec[create_nss_db]']
+            :require => [ 'File[/obsolete/password.conf]', 'Exec[create_nss_db_/obsolete]']
           )
         end
       end
@@ -112,7 +112,7 @@ describe 'nssdb::create', :type => :define do
 
     context 'create nss db' do
       it do
-        should contain_exec('create_nss_db').with(
+        should contain_exec('create_nss_db_/obsolete').with(
           :command => %r{-d /obsolete -f /obsolete},
           :creates => [
             '/obsolete/cert8.db',
