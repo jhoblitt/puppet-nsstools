@@ -34,13 +34,13 @@ define nssdb::add_cert_and_key (
   $pkcs12_name = downcase(regsubst("${nickname}.p12", '[\s]', '_', 'GM'))
 
   exec {"generate_pkcs12_${title}":
-    command     => "/usr/bin/openssl pkcs12 -export -in ${cert} -inkey ${key} -password 'file:${certdir}/password.conf' -out '${certdir}/${pkcs12_name}' -name '${nickname}'",
-    require     => [
+    command   => "/usr/bin/openssl pkcs12 -export -in ${cert} -inkey ${key} -password 'file:${certdir}/password.conf' -out '${certdir}/${pkcs12_name}' -name '${nickname}'",
+    require   => [
       Nssdb::Create[$certdir],
       Class['nssdb'],
     ],
-    subscribe   => File["${certdir}/password.conf"],
-    refreshonly => true,
+    creates   => "${certdir}/${pkcs12_name}",
+    subscribe => File["${certdir}/password.conf"],
   }
 
   exec { "add_pkcs12_${title}":

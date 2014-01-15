@@ -18,6 +18,7 @@ describe 'nssdb::add_cert_and_key', :type => :define do
           'Nssdb::Create[/dne]',
           'Class[Nssdb]'
         ],
+        :creates   => '/dne/server-cert.p12',
         :subscribe => 'File[/dne/password.conf]'
       )
     end
