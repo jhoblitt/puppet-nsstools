@@ -12,7 +12,6 @@ nssdb::add_cert_and_key { 'test':
   certdir  => '/tmp/nssdb',
   cert     => '/tmp/cert.pem',
   key      => '/tmp/key.pem',
-  nickname => 'test',
 }
 
 # You can confirm that things are loaded properly with:

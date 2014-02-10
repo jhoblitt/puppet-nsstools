@@ -1,32 +1,32 @@
 # Loads a certificate and key into an NSS database.
 #
 # Parameters:
-#   $nickname         - required - the nickname for the NSS certificate
-#   $cert             - required - path to certificate in PEM format
-#   $key              - required - path to unencrypted key in PEM format
-#   $certdir          - optional - defaults to $title
+#   $certdir  - required - defaults to $title
+#   $cert     - required - path to certificate in PEM format
+#   $key      - required - path to unencrypted key in PEM format
+#   $nickname - optional - the nickname for the NSS certificate
 #
 # Actions:
 #   loads certificate and key into the NSS database.
 #
 # Requires:
-#   $nickname
+#   $certdir
 #   $cert
 #   $key
 #
 # Sample Usage:
 #
-#      nssdb::add_cert_and_key{"qpidd":
-#        nickname=> 'Server-Cert',
-#        cert => '/tmp/server.crt',
-#        key  => '/tmp/server.key',
-#      }
+#     nssdb::add_cert_and_key{ 'Server-Cert':
+#       certdir => '/dne',
+#       cert    => '/tmp/server.crt',
+#       key     => '/tmp/server.key',
+#     }
 #
 define nssdb::add_cert_and_key (
-  $nickname,
+  $certdir,
   $cert,
   $key,
-  $certdir = $title
+  $nickname = $title
 ) {
   include nssdb
 

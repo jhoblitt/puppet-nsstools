@@ -14,22 +14,19 @@ nssdb::create { '/etc/dirsrv/slapd-ldap1':
   manage_certdir => false,
 }
 
-nssdb::add_cert_and_key{ '/etc/dirsrv/slapd-ldap1':
+nssdb::add_cert_and_key{ 'Server-Cert':
   certdir  => '/etc/dirsrv/slapd-ldap1',
-  nickname => 'Server-Cert',
   cert     => '/tmp/foo.pem',
   key      => '/tmp/foo.key',
 }
 
 nssdb::add_cert { 'AlphaSSL CA':
   certdir  => '/etc/dirsrv/slapd-ldap1',
-  nickname => 'AlphaSSL CA',
   cert     => '/tmp/alphassl_intermediate.pem',
 }
 
 nssdb::add_cert { 'GlobalSign Root CA':
   certdir  => '/etc/dirsrv/slapd-ldap1',
-  nickname => 'GlobalSign Root CA',
   cert     => '/tmp/globalsign_root.pem',
 }
 ```
