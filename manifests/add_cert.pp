@@ -15,18 +15,18 @@
 #
 # Sample Usage:
 #
-#      nssdb::add_cert { '/tmp/server.crt':
+#      nsstools::add_cert { '/tmp/server.crt':
 #        nickname => 'GlobalSign Root CA',
 #        certdir  => '/etc/pki/foo',
 #      }
 #
-define nssdb::add_cert(
+define nsstools::add_cert(
   $certdir,
   $cert,
   $nickname  = $title,
   $trustargs = 'CT,,'
 ) {
-  include nssdb
+  include nsstools
 
   exec { "add_cert_${title}":
     path      => ['/usr/bin'],
@@ -34,8 +34,8 @@ define nssdb::add_cert(
     unless    => "certutil -d ${certdir} -L -n '${nickname}'",
     logoutput => true,
     require   => [
-      Nssdb::Create[$certdir],
-      Class['nssdb'],
+      Nsstools::Create[$certdir],
+      Class['nsstools'],
     ],
   }
 }

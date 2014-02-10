@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'nssdb::add_cert', :type => :define do
+describe 'nsstools::add_cert', :type => :define do
   let(:facts) {{ :osfamily => 'RedHat' }}
 
   context 'default params' do
@@ -20,8 +20,8 @@ describe 'nssdb::add_cert', :type => :define do
           :unless    => "certutil -d /dne -L -n 'GlobalSign Root CA'",
           :logoutput => true,
           :require   => [
-            'Nssdb::Create[/dne]',
-            'Class[Nssdb]'
+            'Nsstools::Create[/dne]',
+            'Class[Nsstools]'
           ]
         )
       end
@@ -47,8 +47,8 @@ describe 'nssdb::add_cert', :type => :define do
           :unless    => "certutil -d /dne -L -n 'GlobalSign Root CA'",
           :logoutput => true,
           :require   => [
-            'Nssdb::Create[/dne]',
-            'Class[Nssdb]'
+            'Nsstools::Create[/dne]',
+            'Class[Nsstools]'
           ]
         )
       end

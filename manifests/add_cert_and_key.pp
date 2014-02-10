@@ -16,19 +16,19 @@
 #
 # Sample Usage:
 #
-#     nssdb::add_cert_and_key{ 'Server-Cert':
+#     nsstools::add_cert_and_key{ 'Server-Cert':
 #       certdir => '/dne',
 #       cert    => '/tmp/server.crt',
 #       key     => '/tmp/server.key',
 #     }
 #
-define nssdb::add_cert_and_key (
+define nsstools::add_cert_and_key (
   $certdir,
   $cert,
   $key,
   $nickname = $title
 ) {
-  include nssdb
+  include nsstools
 
   # downcase and change spaces into _s
   $pkcs12_name = downcase(regsubst("${nickname}.p12", '[\s]', '_', 'GM'))
@@ -39,8 +39,8 @@ define nssdb::add_cert_and_key (
     creates   => "${certdir}/${pkcs12_name}",
     subscribe => File["${certdir}/nss-password.txt"],
     require   => [
-      Nssdb::Create[$certdir],
-      Class['nssdb'],
+      Nsstools::Create[$certdir],
+      Class['nsstools'],
     ],
   }
 
@@ -51,8 +51,8 @@ define nssdb::add_cert_and_key (
     logoutput => true,
     require   => [
       Exec["generate_pkcs12_${title}"],
-      Nssdb::Create[$certdir],
-      Class['nssdb'],
+      Nsstools::Create[$certdir],
+      Class['nsstools'],
     ],
   }
 

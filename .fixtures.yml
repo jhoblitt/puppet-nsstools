@@ -5,4 +5,4 @@ fixtures:
       ref: '4.0.0'
     'openssl': 'https://github.com/camptocamp/puppet-openssl.git'
   symlinks:
-    nssdb: "#{source_dir}"
+    nsstools: "#{source_dir}"

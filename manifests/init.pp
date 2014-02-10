@@ -1,20 +1,20 @@
 # utility class
-class nssdb (
+class nsstools (
   $require_openssl = true,
 ) {
   validate_bool($require_openssl)
 
-  include nssdb::params
-  ensure_packages($::nssdb::params::package_name)
+  include nsstools::params
+  ensure_packages($::nsstools::params::package_name)
 
   if $require_openssl {
     include openssl
 
     Class['openssl'] ->
-    Anchor['nssdb::begin']
+    Anchor['nsstools::begin']
   }
 
-  anchor{ 'nssdb::begin': } ->
-  Package[$::nssdb::params::package_name] ->
-  anchor{ 'nssdb::end': }
+  anchor{ 'nsstools::begin': } ->
+  Package[$::nsstools::params::package_name] ->
+  anchor{ 'nsstools::end': }
 }

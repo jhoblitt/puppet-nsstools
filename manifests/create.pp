@@ -19,14 +19,14 @@
 #
 # Sample Usage:
 #
-# nssdb::create {'test':
+# nsstools::create {'test':
 #    owner => 'qpidd',
 #    group => 'qpidd',
 #    password => 'test'}
 #
 # This will create an NSS database in /etc/pki/test
 #
-define nssdb::create (
+define nsstools::create (
   $owner,
   $group,
   $password,
@@ -35,7 +35,7 @@ define nssdb::create (
   $certdir_mode   = '0700',
   $manage_certdir = true
 ) {
-  include nssdb
+  include nsstools
 
   validate_absolute_path($certdir)
 
@@ -82,7 +82,7 @@ define nssdb::create (
     creates => ["${certdir}/cert8.db", "${certdir}/key3.db", "${certdir}/secmod.db"],
     require => [
       File["${certdir}/nss-password.txt"],
-      Class['nssdb'],
+      Class['nsstools'],
     ]
   }
 }

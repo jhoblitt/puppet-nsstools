@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'nssdb::create', :type => :define do
+describe 'nsstools::create', :type => :define do
   let(:facts) {{ :osfamily => 'RedHat' }}
 
   context 'default params' do
@@ -13,7 +13,7 @@ describe 'nssdb::create', :type => :define do
       }
     end
 
-    context 'nssdb directory' do
+    context 'nsstools directory' do
       it do
         should contain_file('/obsolete').with(
           :owner => 'nobody',
@@ -63,7 +63,7 @@ describe 'nssdb::create', :type => :define do
           ],
           :require => [
             'File[/obsolete/nss-password.txt]',
-            'Class[Nssdb]'
+            'Class[Nsstools]'
           ]
         )
       end
@@ -85,7 +85,7 @@ describe 'nssdb::create', :type => :define do
       }
     end
 
-    context 'nssdb directory' do
+    context 'nsstools directory' do
       it { should_not contain_file('/obsolete') }
     end
 
@@ -125,7 +125,7 @@ describe 'nssdb::create', :type => :define do
           ],
           :require => [
             'File[/obsolete/nss-password.txt]',
-            'Class[Nssdb]'
+            'Class[Nsstools]'
           ]
         )
       end

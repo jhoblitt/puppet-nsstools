@@ -1,11 +1,12 @@
-name    'rcritten/nssdb'
+name    'jhoblitt/nsstools'
 version '1.0.0'
-source 'git://github.com/rcritten/puppet-nssdb.git'
-author 'Rob Crittenden <rcritten@redhat.com>'
+
+author 'Joshua Hoblitt <jhoblitt@cpan.org>'
 license 'Apache'
-summary 'NSS database Puppet Module'
-description 'This module manages NSS databases.'
-project_page 'https://github.com/rcritten/puppet-nssdb'
+project_page 'https://github.com/jhoblitt/puppet-nsstools'
+source 'git://github.com/jhoblitt/puppet-nsstools.git'
+summary 'Manages NSS X.509 certificate databases.'
+description 'Manages NSS X.509 certificate databases.'
 
 dependency 'puppetlabs/stdlib', '>= 4.0.0'
 dependency 'camptocamp/openssl', '>= 0.1.0'

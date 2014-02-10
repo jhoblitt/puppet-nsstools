@@ -1,5 +1,5 @@
 # this class should be considered private
-class nssdb::params {
+class nsstools::params {
   case $::osfamily {
     'redhat': {
       $package_name = ['nss-tools']

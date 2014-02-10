@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'nssdb::add_cert_and_key', :type => :define do
+describe 'nsstools::add_cert_and_key', :type => :define do
   let(:facts) {{ :osfamily => 'RedHat' }}
 
   context 'default params' do
@@ -18,8 +18,8 @@ describe 'nssdb::add_cert_and_key', :type => :define do
         should contain_exec('generate_pkcs12_Server-Cert').with(
           :command   => "/usr/bin/openssl pkcs12 -export -in /tmp/server.cert -inkey /tmp/server.key -password 'file:/dne/nss-password.txt' -out '/dne/server-cert.p12' -name 'Server-Cert'",
           :require   => [
-            'Nssdb::Create[/dne]',
-            'Class[Nssdb]'
+            'Nsstools::Create[/dne]',
+            'Class[Nsstools]'
           ],
           :creates   => '/dne/server-cert.p12',
           :subscribe => 'File[/dne/nss-password.txt]'
@@ -36,8 +36,8 @@ describe 'nssdb::add_cert_and_key', :type => :define do
           :logoutput => true,
           :require   => [
             'Exec[generate_pkcs12_Server-Cert]',
-            'Nssdb::Create[/dne]',
-            'Class[Nssdb]'
+            'Nsstools::Create[/dne]',
+            'Class[Nsstools]'
           ]
         )
       end
@@ -60,8 +60,8 @@ describe 'nssdb::add_cert_and_key', :type => :define do
         should contain_exec('generate_pkcs12_foo').with(
           :command   => "/usr/bin/openssl pkcs12 -export -in /tmp/server.cert -inkey /tmp/server.key -password 'file:/dne/nss-password.txt' -out '/dne/server-cert.p12' -name 'Server-Cert'",
           :require   => [
-            'Nssdb::Create[/dne]',
-            'Class[Nssdb]'
+            'Nsstools::Create[/dne]',
+            'Class[Nsstools]'
           ],
           :creates   => '/dne/server-cert.p12',
           :subscribe => 'File[/dne/nss-password.txt]'
@@ -78,8 +78,8 @@ describe 'nssdb::add_cert_and_key', :type => :define do
           :logoutput => true,
           :require   => [
             'Exec[generate_pkcs12_foo]',
-            'Nssdb::Create[/dne]',
-            'Class[Nssdb]'
+            'Nsstools::Create[/dne]',
+            'Class[Nsstools]'
           ]
         )
       end

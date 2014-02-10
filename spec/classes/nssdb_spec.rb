@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe 'nssdb', :type => :class do
+describe 'nsstools', :type => :class do
   describe 'on osfamily RedHat' do
     let(:facts) {{ :osfamily => 'RedHat' }}
 
     context 'default params' do
       # rspec-puppet relationship matchers seem to be buggy in 1.0.1
-      # it { should contain_class('openssl').that_comes_before('Class[nssdb]') }
+      # it { should contain_class('openssl').that_comes_before('Class[nsstools]') }
       it { should contain_class('openssl') }
       it { should contain_package('nss-tools') }
     end # default params
@@ -30,7 +30,7 @@ describe 'nssdb', :type => :class do
         let(:params) {{ :require_openssl => 'foo' }}
 
         it 'should fail' do
-          expect { should contain_class('nssdb') }.
+          expect { should contain_class('nsstools') }.
             to raise_error(/not a boolean./)
         end
       end
