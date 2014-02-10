@@ -6,6 +6,7 @@ describe 'nssdb::add_cert', :type => :define do
     {
       :nickname => 'GlobalSign Root CA',
       :cert     => '/tmp/server.crt',
+      :certdir  => '/dne',
     }
   end
 

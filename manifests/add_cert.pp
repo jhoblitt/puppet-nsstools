@@ -2,8 +2,8 @@
 #
 # Parameters:
 #   $nickname         - required - the nickname for the NSS certificate
-#   $cert             - required - path to certificate in PEM format
-#   $certdir          - optional - defaults to $title
+#   $cert             - optional - path to certificate in PEM format
+#   $certdir          - required - defaults to $title
 #   $trustargs        - optional - defaults to 'CT,,'
 #
 # Actions:
@@ -15,15 +15,15 @@
 #
 # Sample Usage:
 #
-#      nssdb::add_cert { '/etc/pki/foo':
+#      nssdb::add_cert { '/tmp/server.crt':
 #        nickname => 'GlobalSign Root CA',
-#        cert     => '/tmp/server.crt',
+#        certdir  => '/etc/pki/foo',
 #      }
 #
 define nssdb::add_cert(
   $nickname,
-  $cert,
-  $certdir   = $title,
+  $cert      = $title,
+  $certdir,
   $trustargs = 'CT,,'
 ) {
   include nssdb

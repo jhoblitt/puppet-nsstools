@@ -5,9 +5,9 @@ describe 'nssdb::create', :type => :define do
     let(:title) { '/obsolete' }
     let(:params) do
       {
-        :owner_id       => 'nobody',
-        :group_id       => 'nobody',
-        :password       => 'secret',
+        :owner    => 'nobody',
+        :group    => 'nobody',
+        :password => 'secret',
       }
     end
 
@@ -72,8 +72,8 @@ describe 'nssdb::create', :type => :define do
     let(:title) { '/obsolete' }
     let(:params) do
       {
-        :owner_id       => 'nobody',
-        :group_id       => 'nobody',
+        :owner          => 'nobody',
+        :group          => 'nobody',
         :mode           => '0660',
         :password       => 'secret',
         :manage_certdir => false,

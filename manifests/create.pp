@@ -1,8 +1,8 @@
 # Create an empty NSS database with a password file.
 #
 # Parameters:
-#   $owner_id         - required - the file/directory user
-#   $group_id         - required - the file/directory group
+#   $owner         - required - the file/directory user
+#   $group         - required - the file/directory group
 #   $password         - required - password to set on the database
 #   $mode             - optional - defaults to '0600'
 #   $certdir_mode     - optional - defaults to '0700'
@@ -12,22 +12,22 @@
 #      cert8.db, key3.db, secmod.db and a password file, password.conf
 #
 # Requires:
-#   $owner_id must be set
-#   $group_id must be set
+#   $owner must be set
+#   $group must be set
 #   $password must be set
 #
 # Sample Usage:
 #
 # nssdb::create {'test':
-#    owner_id => 'qpidd',
-#    group_id => 'qpidd',
+#    owner => 'qpidd',
+#    group => 'qpidd',
 #    password => 'test'}
 #
 # This will create an NSS database in /etc/pki/test
 #
 define nssdb::create (
-  $owner_id,
-  $group_id,
+  $owner,
+  $group,
   $password,
   $mode           = '0600',
   $certdir_mode   = '0700',
@@ -42,8 +42,8 @@ define nssdb::create (
     file { $certdir:
       ensure  => directory,
       mode    => $certdir_mode,
-      owner   => $owner_id,
-      group   => $group_id,
+      owner   => $owner,
+      group   => $group,
     }
 
     $require_certdir = File[$certdir]
@@ -55,8 +55,8 @@ define nssdb::create (
   file { "${certdir}/password.conf":
     ensure  => file,
     mode    => $mode,
-    owner   => $owner_id,
-    group   => $group_id,
+    owner   => $owner,
+    group   => $group,
     content => $password,
     require => $require_certdir,
   }
@@ -68,8 +68,8 @@ define nssdb::create (
   ]:
     ensure  => file,
     mode    => $mode,
-    owner   => $owner_id,
-    group   => $group_id,
+    owner   => $owner,
+    group   => $group,
     require => [
       File["${certdir}/password.conf"],
       Exec["create_nss_db_${title}"],

@@ -7,14 +7,15 @@ and key via PEM files.
 
 ```
 nssdb::create { '/etc/dirsrv/slapd-ldap1':
-  owner_id       => 'nobody',
-  group_id       => 'nobody',
+  owner          => 'nobody',
+  group          => 'nobody',
   mode           => '0660',
   password       => 'example',
   manage_certdir => false,
 }
 
 nssdb::add_cert_and_key{ '/etc/dirsrv/slapd-ldap1':
+  certdir  => '/etc/dirsrv/slapd-ldap1',
   nickname => 'Server-Cert',
   cert     => '/tmp/foo.pem',
   key      => '/tmp/foo.key',
