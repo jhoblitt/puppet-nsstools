@@ -1,11 +1,12 @@
 # Create an empty NSS database with a password file.
 #
 # Parameters:
-#   $owner         - required - the file/directory user
-#   $group         - required - the file/directory group
-#   $password         - required - password to set on the database
-#   $mode             - optional - defaults to '0600'
-#   $certdir_mode     - optional - defaults to '0700'
+#   $owner        - required - the file/directory user
+#   $group        - required - the file/directory group
+#   $password     - required - password to set on the database
+#   $certdir      - optional - defaults to title
+#   $mode         - optional - defaults to '0600'
+#   $certdir_mode - optional - defaults to '0700'
 #
 # Actions:
 #   creates a new NSS database, consisting of 4 files:
@@ -29,21 +30,21 @@ define nssdb::create (
   $owner,
   $group,
   $password,
+  $certdir        = $title,
   $mode           = '0600',
   $certdir_mode   = '0700',
   $manage_certdir = true
 ) {
   include nssdb
 
-  validate_absolute_path($title)
-  $certdir = $title
+  validate_absolute_path($certdir)
 
   if $manage_certdir {
     file { $certdir:
-      ensure  => directory,
-      mode    => $certdir_mode,
-      owner   => $owner,
-      group   => $group,
+      ensure => directory,
+      mode   => $certdir_mode,
+      owner  => $owner,
+      group  => $group,
     }
 
     $require_certdir = File[$certdir]

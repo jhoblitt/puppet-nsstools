@@ -69,9 +69,11 @@ describe 'nssdb::create', :type => :define do
   end # default params
 
   context 'all params' do
-    let(:title) { '/obsolete' }
+    # when certdir is set, title should not have to be an absolute path
+    let(:title) { 'foo' }
     let(:params) do
       {
+        :certdir        => '/obsolete',
         :owner          => 'nobody',
         :group          => 'nobody',
         :mode           => '0660',
@@ -104,7 +106,7 @@ describe 'nssdb::create', :type => :define do
             :owner   => 'nobody',
             :group   => 'nobody',
             :mode    => '0660',
-            :require => [ 'File[/obsolete/password.conf]', 'Exec[create_nss_db_/obsolete]']
+            :require => [ 'File[/obsolete/password.conf]', 'Exec[create_nss_db_foo]']
           )
         end
       end
@@ -112,7 +114,7 @@ describe 'nssdb::create', :type => :define do
 
     context 'create nss db' do
       it do
-        should contain_exec('create_nss_db_/obsolete').with(
+        should contain_exec('create_nss_db_foo').with(
           :command => %r{-d /obsolete -f /obsolete},
           :creates => [
             '/obsolete/cert8.db',
