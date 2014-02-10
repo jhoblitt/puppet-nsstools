@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe 'nssdb::add_cert', :type => :define do
+  let(:facts) {{ :osfamily => 'RedHat' }}
+
   context 'default params' do
     let(:title) { 'GlobalSign Root CA' }
     let(:params) do

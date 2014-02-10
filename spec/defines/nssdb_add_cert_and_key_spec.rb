@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe 'nssdb::add_cert_and_key', :type => :define do
+  let(:facts) {{ :osfamily => 'RedHat' }}
+
   context 'default params' do
     let(:title) { 'Server-Cert' }
     let(:params) do

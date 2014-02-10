@@ -8,3 +8,4 @@ description 'This module manages NSS databases.'
 project_page 'https://github.com/rcritten/puppet-nssdb'
 
 dependency 'puppetlabs/stdlib', '>= 4.0.0'
+dependency 'camptocamp/openssl', '>= 0.1.0'

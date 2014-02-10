@@ -1,7 +1,8 @@
 fixtures:
   repositories:
     'stdlib':
-      repo: 'git://github.com/puppetlabs/puppetlabs-stdlib.git'
+      repo: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
       ref: '4.0.0'
+    'openssl': 'https://github.com/camptocamp/puppet-openssl.git'
   symlinks:
     nssdb: "#{source_dir}"

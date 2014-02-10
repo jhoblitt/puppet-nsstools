@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe 'nssdb::create', :type => :define do
+  let(:facts) {{ :osfamily => 'RedHat' }}
+
   context 'default params' do
     let(:title) { '/obsolete' }
     let(:params) do
