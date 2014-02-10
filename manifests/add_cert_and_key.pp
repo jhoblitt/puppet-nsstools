@@ -35,9 +35,9 @@ define nssdb::add_cert_and_key (
 
   exec {"generate_pkcs12_${title}":
     umask     => '7077',
-    command   => "/usr/bin/openssl pkcs12 -export -in ${cert} -inkey ${key} -password 'file:${certdir}/password.conf' -out '${certdir}/${pkcs12_name}' -name '${nickname}'",
+    command   => "/usr/bin/openssl pkcs12 -export -in ${cert} -inkey ${key} -password 'file:${certdir}/nss-password.txt' -out '${certdir}/${pkcs12_name}' -name '${nickname}'",
     creates   => "${certdir}/${pkcs12_name}",
-    subscribe => File["${certdir}/password.conf"],
+    subscribe => File["${certdir}/nss-password.txt"],
     require   => [
       Nssdb::Create[$certdir],
       Class['nssdb'],
@@ -46,7 +46,7 @@ define nssdb::add_cert_and_key (
 
   exec { "add_pkcs12_${title}":
     path      => ['/usr/bin'],
-    command   => "pk12util -d ${certdir} -i ${certdir}/${pkcs12_name} -w ${certdir}/password.conf -k ${certdir}/password.conf",
+    command   => "pk12util -d ${certdir} -i ${certdir}/${pkcs12_name} -w ${certdir}/nss-password.txt -k ${certdir}/nss-password.txt",
     unless    => "certutil -d ${certdir} -L -n '${nickname}'",
     logoutput => true,
     require   => [

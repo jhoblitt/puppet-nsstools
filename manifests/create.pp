@@ -10,7 +10,7 @@
 #
 # Actions:
 #   creates a new NSS database, consisting of 4 files:
-#      cert8.db, key3.db, secmod.db and a password file, password.conf
+#      cert8.db, key3.db, secmod.db and a password file, nss-password.txt
 #
 # Requires:
 #   $owner must be set
@@ -53,7 +53,7 @@ define nssdb::create (
     $require_certdir = undef
   }
 
-  file { "${certdir}/password.conf":
+  file { "${certdir}/nss-password.txt":
     ensure  => file,
     mode    => $mode,
     owner   => $owner,
@@ -72,16 +72,16 @@ define nssdb::create (
     owner   => $owner,
     group   => $group,
     require => [
-      File["${certdir}/password.conf"],
+      File["${certdir}/nss-password.txt"],
       Exec["create_nss_db_${title}"],
     ],
   }
 
   exec { "create_nss_db_${title}":
-    command => "/usr/bin/certutil -N -d ${certdir} -f ${certdir}/password.conf",
+    command => "/usr/bin/certutil -N -d ${certdir} -f ${certdir}/nss-password.txt",
     creates => ["${certdir}/cert8.db", "${certdir}/key3.db", "${certdir}/secmod.db"],
     require => [
-      File["${certdir}/password.conf"],
+      File["${certdir}/nss-password.txt"],
       Class['nssdb'],
     ]
   }

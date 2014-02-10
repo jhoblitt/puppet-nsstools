@@ -23,7 +23,7 @@ describe 'nssdb::create', :type => :define do
 
     context 'password file' do
       it do
-        should contain_file('/obsolete/password.conf').with(
+        should contain_file('/obsolete/nss-password.txt').with(
           :owner   => 'nobody',
           :group   => 'nobody',
           :mode    => '0600',
@@ -42,7 +42,7 @@ describe 'nssdb::create', :type => :define do
             :group   => 'nobody',
             :mode    => '0600',
             :require => [
-              'File[/obsolete/password.conf]',
+              'File[/obsolete/nss-password.txt]',
               'Exec[create_nss_db_/obsolete]',
             ]
           )
@@ -60,7 +60,7 @@ describe 'nssdb::create', :type => :define do
             '/obsolete/secmod.db'
           ],
           :require => [
-            'File[/obsolete/password.conf]',
+            'File[/obsolete/nss-password.txt]',
             'Class[Nssdb]'
           ]
         )
@@ -89,7 +89,7 @@ describe 'nssdb::create', :type => :define do
 
     context 'password file' do
       it do
-        should contain_file('/obsolete/password.conf').with(
+        should contain_file('/obsolete/nss-password.txt').with(
           :owner   => 'nobody',
           :group   => 'nobody',
           :mode    => '0660',
@@ -106,7 +106,7 @@ describe 'nssdb::create', :type => :define do
             :owner   => 'nobody',
             :group   => 'nobody',
             :mode    => '0660',
-            :require => [ 'File[/obsolete/password.conf]', 'Exec[create_nss_db_foo]']
+            :require => [ 'File[/obsolete/nss-password.txt]', 'Exec[create_nss_db_foo]']
           )
         end
       end
@@ -122,7 +122,7 @@ describe 'nssdb::create', :type => :define do
             '/obsolete/secmod.db'
           ],
           :require => [
-            'File[/obsolete/password.conf]',
+            'File[/obsolete/nss-password.txt]',
             'Class[Nssdb]'
           ]
         )
