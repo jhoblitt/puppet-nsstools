@@ -1,16 +1,16 @@
 # Loads a certificate into an NSS database.
 #
 # Parameters:
-#   $nickname         - required - the nickname for the NSS certificate
-#   $cert             - optional - path to certificate in PEM format
-#   $certdir          - required - defaults to $title
-#   $trustargs        - optional - defaults to 'CT,,'
+#   $certdir   - required - defaults to $title
+#   $cert      - required - path to certificate in PEM format
+#   $nickname  - optional - the nickname for the NSS certificate
+#   $trustargs - optional - defaults to 'CT,,'
 #
 # Actions:
 #   loads certificate and key into the NSS database.
 #
 # Requires:
-#   $nickname
+#   $certdir
 #   $cert
 #
 # Sample Usage:
@@ -21,9 +21,9 @@
 #      }
 #
 define nssdb::add_cert(
-  $nickname,
-  $cert      = $title,
   $certdir,
+  $cert,
+  $nickname  = $title,
   $trustargs = 'CT,,'
 ) {
   include nssdb
