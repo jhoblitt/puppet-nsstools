@@ -1,10 +1,19 @@
-require 'rubygems'
 require 'puppetlabs_spec_helper/rake_tasks'
-require 'rake/clean'
+require 'puppet-syntax/tasks/puppet-syntax'
+require 'puppet-lint/tasks/puppet-lint'
 
-CLEAN.include('spec/fixtures/', 'spec/reports')
+PuppetSyntax.exclude_paths = ['spec/fixtures/**/*']
+#PuppetLint.configuration.send('disable_class_inherits_from_params_class')
+#PuppetLint.configuration.send('disable_variable_scope')
+PuppetLint.configuration.ignore_paths = [
+  'pkg/**/*.pp',
+  'spec/**/*.pp',
+  'tests/**/*.pp',
+]
 
-task :spec => [:spec_prep]
+task :default => [
+  :syntax,
+  :lint,
+  :spec,
+]
 
-desc "Run all tasks (spec)"
-task :all => [ :spec ]
