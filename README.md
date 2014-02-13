@@ -8,7 +8,7 @@ Puppet nsstools Module
 1. [Overview](#overview)
 2. [Description](#description)
 3. [Usage](#usage)
-    * [_Security Considerations_](#security_considerations)
+    * [__Security Considerations__](#security_considerations)
     * [Classes](#classes)
     * [Types](#types)
     * [Functions](#functions)
@@ -38,7 +38,7 @@ Tools](https://developer.mozilla.org/en-US/docs/NSS/tools) and
 The latter is some what ironically required as although the NSS suite is
 intended to be used in place of OpenSSL, it mandates the usage of
 [`PKCS#12`](https://en.wikipedia.org/wiki/PKCS_12) format files for certain
-operations.  This is unfortunate is it appears to provide no utility for
+operations.  This is unfortunate as it appears to provide no utility for
 converting between the ASCII
 [`.pem`](https://serverfault.com/questions/9708/what-is-a-pem-file-and-how-does-it-differ-from-other-openssl-generated-key-file)
 format popular for X.509 certificates and `PKCS#12`. Thus, OpenSSL is required
@@ -53,7 +53,7 @@ database.
 Usage
 -----
 
-## _Security Considerations_
+## __Security Considerations__
 
 This module creates an on-disk file in the path of the NSS database named
 `nss-password.txt`.  This file contains the password used to encrypt private
@@ -76,19 +76,19 @@ nsstools::create { '/etc/dirsrv/slapd-ldap1':
 }
 
 nsstools::add_cert_and_key{ 'Server-Cert':
-  certdir  => '/etc/dirsrv/slapd-ldap1',
-  cert     => '/tmp/foo.pem',
-  key      => '/tmp/foo.key',
+  certdir => '/etc/dirsrv/slapd-ldap1',
+  cert    => '/tmp/foo.pem',
+  key     => '/tmp/foo.key',
 }
 
 nsstools::add_cert { 'AlphaSSL CA':
-  certdir  => '/etc/dirsrv/slapd-ldap1',
-  cert     => '/tmp/alphassl_intermediate.pem',
+  certdir => '/etc/dirsrv/slapd-ldap1',
+  cert    => '/tmp/alphassl_intermediate.pem',
 }
 
 nsstools::add_cert { 'GlobalSign Root CA':
-  certdir  => '/etc/dirsrv/slapd-ldap1',
-  cert     => '/tmp/globalsign_root.pem',
+  certdir => '/etc/dirsrv/slapd-ldap1',
+  cert    => '/tmp/globalsign_root.pem',
 }
 ```
 
@@ -96,8 +96,8 @@ nsstools::add_cert { 'GlobalSign Root CA':
 
 ### `nsstools`
 
-This class is required by all of this modules types.  It owns installation of
-the `nss-tools` package.
+This class is required by all of this module's types.  It "owns" installation
+of the `nss-tools` package.
 
 ```puppet
 # defaults
@@ -106,7 +106,7 @@ class { 'nsstools':
 }
 ```
 
- * `require\_openssl`
+ * `require_openssl`
 
     `Bool`. Defaults to: `true`
 
@@ -141,7 +141,7 @@ nsstools::create { <title>:
     `String` Required
 
     Password to set on the database. There are 
-    [_Security Considerations_](#security_considerations) to be aware of with
+    [__Security Considerations__](#security_considerations) to be aware of with
     this parameter.
 
  * `certdir`
@@ -170,11 +170,11 @@ nsstools::create { <title>:
 
     `String` Defaults to: `0600`
 
- * `certdir\_mode`
+ * `certdir_mode`
 
     `String` Defaults to: `0700`
 
-### `add\_cert`
+### `add_cert`
 
 Insert a certificate into an existing NSS database.
 
@@ -215,7 +215,7 @@ nsstools::add_cert { <title>:
 
     The certificate trust attributes in the database.
 
-### `add\_cert\_and\_key`
+### `add_cert_and_key`
 
 Insert a certificate and it's associated private key an existing NSS database.
 
@@ -259,7 +259,7 @@ nsstools::add_cert_and_key { <title>:
 
 ## Functions
 
-### `nsstools\_add\_cert`
+### `nsstools_add_cert`
 
 Iterates over a hash of cert nickname/path pairs (key/value) and creates
 nsstools::add_cert resources.
