@@ -8,7 +8,7 @@ Puppet nsstools Module
 1. [Overview](#overview)
 2. [Description](#description)
 3. [Usage](#usage)
-    * [__Security Considerations__](#security_considerations)
+    * [__Security Considerations__](#security-considerations)
     * [Classes](#classes)
     * [Types](#types)
     * [Functions](#functions)
@@ -141,7 +141,7 @@ nsstools::create { <title>:
     `String` Required
 
     Password to set on the database. There are 
-    [__Security Considerations__](#security_considerations) to be aware of with
+    [__Security Considerations__](#security-considerations) to be aware of with
     this parameter.
 
  * `certdir`
