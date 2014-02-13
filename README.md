@@ -9,6 +9,7 @@ Puppet nsstools Module
 2. [Description](#description)
 3. [Usage](#usage)
     * [__Security Considerations__](#security-considerations)
+    * [Example](#Example)
     * [Classes](#classes)
     * [Types](#types)
     * [Functions](#functions)
