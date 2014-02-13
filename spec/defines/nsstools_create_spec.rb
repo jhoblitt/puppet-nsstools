@@ -91,12 +91,12 @@ describe 'nsstools::create', :type => :define do
 
     context 'password file' do
       it do
-        should contain_file('/obsolete/nss-password.txt').with({
+        should contain_file('/obsolete/nss-password.txt').with(
           :owner   => 'nobody',
           :group   => 'nobody',
           :mode    => '0660',
           :content => 'secret',
-        })
+        )
       end
     end
 
@@ -104,19 +104,19 @@ describe 'nsstools::create', :type => :define do
       databases = ['cert8.db', 'key3.db', 'secmod.db']
       databases.each do |db|
         it do
-          should contain_file('/obsolete/' + db).with({
+          should contain_file('/obsolete/' + db).with(
             :owner   => 'nobody',
             :group   => 'nobody',
             :mode    => '0660',
             :require => [ 'File[/obsolete/nss-password.txt]', 'Exec[create_nss_db_foo]']
-          })
+          )
         end
       end
     end
 
     context 'create nss db' do
       it do
-        should contain_exec('create_nss_db_foo').with({
+        should contain_exec('create_nss_db_foo').with(
           :command => %r{-d /obsolete -f /obsolete},
           :creates => [
             '/obsolete/cert8.db',
@@ -127,7 +127,7 @@ describe 'nsstools::create', :type => :define do
             'File[/obsolete/nss-password.txt]',
             'Class[Nsstools]'
           ]
-        })
+        )
       end
     end
   end # all params
