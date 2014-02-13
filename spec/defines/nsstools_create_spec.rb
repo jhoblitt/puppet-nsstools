@@ -7,8 +7,6 @@ describe 'nsstools::create', :type => :define do
     let(:title) { '/obsolete' }
     let(:params) do
       {
-        :owner    => 'nobody',
-        :group    => 'nobody',
         :password => 'secret',
       }
     end
@@ -16,8 +14,6 @@ describe 'nsstools::create', :type => :define do
     context 'nsstools directory' do
       it do
         should contain_file('/obsolete').with(
-          :owner => 'nobody',
-          :group => 'nobody',
           :mode  => '0700'
         )
       end
@@ -26,8 +22,6 @@ describe 'nsstools::create', :type => :define do
     context 'password file' do
       it do
         should contain_file('/obsolete/nss-password.txt').with(
-          :owner   => 'nobody',
-          :group   => 'nobody',
           :mode    => '0600',
           :content => 'secret',
           :require => 'File[/obsolete]'
@@ -40,8 +34,6 @@ describe 'nsstools::create', :type => :define do
       databases.each do |db|
         it do
           should contain_file('/obsolete/' + db).with(
-            :owner   => 'nobody',
-            :group   => 'nobody',
             :mode    => '0600',
             :require => [
               'File[/obsolete/nss-password.txt]',
