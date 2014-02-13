@@ -15,10 +15,11 @@
 #
 # Sample Usage:
 #
-#      nsstools::add_cert { '/tmp/server.crt':
-#        nickname => 'GlobalSign Root CA',
-#        certdir  => '/etc/pki/foo',
-#      }
+#   nsstools::add_cert { '/tmp/server.crt':
+#     nickname => 'GlobalSign Root CA',
+#     certdir  => '/etc/pki/foo',
+#   }
+#
 #
 define nsstools::add_cert(
   $certdir,
@@ -27,6 +28,11 @@ define nsstools::add_cert(
   $trustargs = 'CT,,'
 ) {
   include nsstools
+
+  validate_absolute_path($certdir)
+  validate_absolute_path($cert)
+  validate_string($nickname)
+  validate_string($trustargs)
 
   exec { "add_cert_${title}":
     path      => ['/usr/bin'],
