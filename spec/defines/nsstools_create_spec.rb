@@ -95,7 +95,7 @@ describe 'nsstools::create', :type => :define do
           :owner   => 'nobody',
           :group   => 'nobody',
           :mode    => '0660',
-          :content => 'secret',
+          :content => 'secret'
         )
       end
     end
