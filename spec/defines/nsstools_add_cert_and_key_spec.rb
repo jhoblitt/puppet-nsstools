@@ -16,7 +16,7 @@ describe 'nsstools::add_cert_and_key', :type => :define do
     context 'generate_pkcs12' do
       it do
         should contain_exec('generate_pkcs12_Server-Cert').with(
-          :command   => "/usr/bin/openssl pkcs12 -export -in /tmp/server.cert -inkey /tmp/server.key -password 'file:/dne/nss-password.txt' -out '/dne/server-cert.p12' -name 'Server-Cert'",
+          :command   => "umask 7077 && /usr/bin/openssl pkcs12 -export -in /tmp/server.cert -inkey /tmp/server.key -password 'file:/dne/nss-password.txt' -out '/dne/server-cert.p12' -name 'Server-Cert'",
           :require   => [
             'Nsstools::Create[/dne]',
             'Class[Nsstools]'
@@ -58,7 +58,7 @@ describe 'nsstools::add_cert_and_key', :type => :define do
     context 'generate_pkcs12' do
       it do
         should contain_exec('generate_pkcs12_foo').with(
-          :command   => "/usr/bin/openssl pkcs12 -export -in /tmp/server.cert -inkey /tmp/server.key -password 'file:/dne/nss-password.txt' -out '/dne/server-cert.p12' -name 'Server-Cert'",
+          :command   => "umask 7077 && /usr/bin/openssl pkcs12 -export -in /tmp/server.cert -inkey /tmp/server.key -password 'file:/dne/nss-password.txt' -out '/dne/server-cert.p12' -name 'Server-Cert'",
           :require   => [
             'Nsstools::Create[/dne]',
             'Class[Nsstools]'

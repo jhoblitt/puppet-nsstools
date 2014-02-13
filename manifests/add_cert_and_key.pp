@@ -33,9 +33,10 @@ define nsstools::add_cert_and_key (
   # downcase and change spaces into _s
   $pkcs12_name = downcase(regsubst("${nickname}.p12", '[\s]', '_', 'GM'))
 
+  # the exec type in older versions of puppet don't support the umask param so
+  # we have to inline it in the command string
   exec {"generate_pkcs12_${title}":
-    umask     => '7077',
-    command   => "/usr/bin/openssl pkcs12 -export -in ${cert} -inkey ${key} -password 'file:${certdir}/nss-password.txt' -out '${certdir}/${pkcs12_name}' -name '${nickname}'",
+    command   => "umask 7077 && /usr/bin/openssl pkcs12 -export -in ${cert} -inkey ${key} -password 'file:${certdir}/nss-password.txt' -out '${certdir}/${pkcs12_name}' -name '${nickname}'",
     creates   => "${certdir}/${pkcs12_name}",
     subscribe => File["${certdir}/nss-password.txt"],
     require   => [
