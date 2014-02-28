@@ -1,5 +1,9 @@
 
 #### [Current]
+ * [ab70ece](../../commit/ab70ece) - __(Joshua Hoblitt)__ yet another attempt to work around exec umask issues
+
+#### v1.0.0
+ * [75e9d57](../../commit/75e9d57) - __(Joshua Hoblitt)__ prepare for v1.0.0 release
  * [7142b86](../../commit/7142b86) - __(Joshua Hoblitt)__ rename CHANGELOG -> CHANGELOG.md
  * [0edbbea](../../commit/0edbbea) - __(Joshua Hoblitt)__ update README ToC
  * [2ecbada](../../commit/2ecbada) - __(Joshua Hoblitt)__ fix README anchors
