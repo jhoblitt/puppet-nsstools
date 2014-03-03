@@ -1,5 +1,15 @@
 
 #### [Current]
+ * [05d081a](../../commit/05d081a) - __(Joshua Hoblitt)__ [re]add dep on camptocamp/openssl >= 0.2.0
+
+The 0.2.0 release of camptocamp/openssl fixes the problem 0.1.0 had
+with a fixed dep on stdlib = 0.0.1.  It's now safe to declare a dep on
+that module without breaking dep resolution.
+
+    https://github.com/camptocamp/puppet-openssl/issues/22
+
+#### v1.0.1
+ * [eba140d](../../commit/eba140d) - __(Joshua Hoblitt)__ bump version to v1.0.1
  * [ab70ece](../../commit/ab70ece) - __(Joshua Hoblitt)__ yet another attempt to work around exec umask issues
 
 #### v1.0.0
