@@ -9,6 +9,4 @@ summary 'Manages NSS certificate databases'
 description 'Manages NSS certificate databases'
 
 dependency 'puppetlabs/stdlib', '>= 4.0.0'
-# XXX camptocamp/openssl 0.1.0 has a dep on stdlib = 0.0.1
-#   https://github.com/camptocamp/puppet-openssl/issues/22
-#dependency 'camptocamp/openssl', '>= 0.1.0'
+dependency 'camptocamp/openssl', '>= 0.2.0'
