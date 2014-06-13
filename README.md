@@ -74,6 +74,7 @@ nsstools::create { '/etc/dirsrv/slapd-ldap1':
   mode           => '0660',
   password       => 'example',
   manage_certdir => false,
+  enable_fips    => false,
 }
 
 nsstools::add_cert_and_key{ 'Server-Cert':
@@ -128,7 +129,8 @@ nsstools::create { <title>:
   group          => undef,
   mode           => '0600',
   certdir_mode   => '0700',
-  manage_certdir => true
+  manage_certdir => true,
+  enable_fips    => false,
 }
 ```
 
@@ -174,6 +176,12 @@ nsstools::create { <title>:
  * `certdir_mode`
 
     `String` Defaults to: `0700`
+
+ * `enable_fips`
+
+    `Boolean` Defaults to: `true`
+
+    If `true` enables FIPS compliance mode on the NSS DB.
 
 ### `add_cert`
 

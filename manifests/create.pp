@@ -8,6 +8,7 @@
 #   $mode           - optional - defaults to '0600'
 #   $certdir_mode   - optional - defaults to '0700'
 #   $manage_certdir - optional - defaults to true
+#   $enable_fips    - optional - defaults to false
 #
 # Actions:
 #   creates a new NSS database, consisting of 4 files:
@@ -25,7 +26,8 @@
 #     group          => 'root',
 #     mode           => '0600',
 #     certdir_mode   => '0700',
-#     manage_certdir => true
+#     manage_certdir => true,
+#     enable_fips    => false,
 #   }
 #
 #
@@ -36,7 +38,8 @@ define nsstools::create (
   $group          = undef,
   $mode           = '0600',
   $certdir_mode   = '0700',
-  $manage_certdir = true
+  $manage_certdir = true,
+  $enable_fips    = false,
 ) {
   include nsstools
 
@@ -47,6 +50,7 @@ define nsstools::create (
   validate_string($mode)
   validate_string($certdir_mode)
   validate_bool($manage_certdir)
+  validate_bool($enable_fips)
 
   if $manage_certdir {
     file { $certdir:
@@ -62,7 +66,8 @@ define nsstools::create (
     $require_certdir = undef
   }
 
-  file { "${certdir}/nss-password.txt":
+  $_password_file = "${certdir}/nss-password.txt"
+  file { $_password_file:
     ensure  => file,
     owner   => $owner,
     group   => $group,
@@ -81,17 +86,27 @@ define nsstools::create (
     group   => $group,
     mode    => $mode,
     require => [
-      File["${certdir}/nss-password.txt"],
+      File[$_password_file],
       Exec["create_nss_db_${title}"],
     ],
   }
 
   exec { "create_nss_db_${title}":
-    command => "/usr/bin/certutil -N -d ${certdir} -f ${certdir}/nss-password.txt",
+    command => "/usr/bin/certutil -N -d ${certdir} -f ${_password_file}",
     creates => ["${certdir}/cert8.db", "${certdir}/key3.db", "${certdir}/secmod.db"],
     require => [
-      File["${certdir}/nss-password.txt"],
+      File[$_password_file],
       Class['nsstools'],
     ]
+  }
+
+  if $enable_fips {
+    # enable fips mode on the NSS DB after DB creation
+    exec { "enable_fips_mode_${title}":
+      command     => "/usr/bin/modutil -fips true -dbdir ${certdir} -force",
+      unless      => "/usr/bin/modutil -chkfips true -dbdir ${certdir}",
+      subscribe   => [Exec["create_nss_db_${title}"],],
+      refreshonly => true,
+    }
   }
 }
