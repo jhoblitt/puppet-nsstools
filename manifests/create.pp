@@ -42,6 +42,7 @@ define nsstools::create (
   $enable_fips    = false,
 ) {
   include nsstools
+  include nsstools::params
 
   validate_string($password)
   validate_absolute_path($certdir)
@@ -66,7 +67,7 @@ define nsstools::create (
     $require_certdir = undef
   }
 
-  $_password_file = "${certdir}/nss-password.txt"
+  $_password_file = "${certdir}/${nsstools::params::password_file_name}"
   file { $_password_file:
     ensure  => file,
     owner   => $owner,
