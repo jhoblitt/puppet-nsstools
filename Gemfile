@@ -14,3 +14,5 @@ gem 'puppet-syntax',                  :require => false
 #   https://github.com/rodjek/rspec-puppet/pull/155
 #   https://github.com/rodjek/rspec-puppet/commit/03e94422fb9bbdd950d5a0bec6ead5d76e06616b
 gem 'rspec-puppet', '1.0.1', :git => 'https://github.com/rodjek/rspec-puppet.git', :ref => '03e94422fb9bbdd950d5a0bec6ead5d76e06616b', :require => false
+# rspec 3 breaks rspec-puppet 1.0.1
+gem 'rspec-core', '~> 2.0',           :require => false
