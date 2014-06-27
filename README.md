@@ -74,6 +74,7 @@ nsstools::create { '/etc/dirsrv/slapd-ldap1':
   mode           => '0660',
   password       => 'example',
   manage_certdir => false,
+  enable_fips    => false,
 }
 
 nsstools::add_cert_and_key{ 'Server-Cert':
@@ -128,7 +129,8 @@ nsstools::create { <title>:
   group          => undef,
   mode           => '0600',
   certdir_mode   => '0700',
-  manage_certdir => true
+  manage_certdir => true,
+  enable_fips    => false,
 }
 ```
 
@@ -175,6 +177,12 @@ nsstools::create { <title>:
 
     `String` Defaults to: `0700`
 
+ * `enable_fips`
+
+    `Boolean` Defaults to: `true`
+
+    If `true` enables FIPS compliance mode on the NSS DB.
+
 ### `add_cert`
 
 Insert a certificate into an existing NSS database.
@@ -194,8 +202,7 @@ nsstools::add_cert { <title>:
 
  * `certdir`
 
-    `String`/absolute path required
-
+    `String`/absolute path required 
     Absolute path to the directory to contain the database files.
 
  * `cert`
@@ -257,6 +264,53 @@ nsstools::add_cert_and_key { <title>:
     `String` defaults to: `title`
 
     The "nickname" of the certificate in the database.
+
+### `create_cert_and_key`
+
+Create a certificate and it's associated private key directly in an existing NSS database.
+
+```puppet
+nsstools::create_cert_and_key { <title>:
+  nickname => <title>, # defaults to $title
+  subject  => <subject>, # required
+  certdir  => <certdir>, # required
+}
+```
+
+ * `title`
+
+    Used as the default value for the `nickname` parameter.
+
+ * `nickname`
+
+    `String` defaults to: `title`
+
+    The "nickname" of the certificate in the database.
+
+ * `subject`
+
+    `String` required
+
+    The subject of the certificate. The subject identification format follows RFC #1485.
+
+ * `keytype`
+
+    `String` defaults to: 'rsa'
+
+    The type of key to generate with the self signed cert.
+    Valid options: ras|dsa|ec|all
+
+ * `noisefile`
+
+    `String`/absolute path defaults to: '/var/log/messages'
+
+    The path to a file to use as noise to generate the cert. The minimum file size is 20 bytes.
+
+ * `certdir`
+
+    `String`/absolute path required
+
+    Absolute path to the directory that contains the already created NSS database.
 
 ## Functions
 

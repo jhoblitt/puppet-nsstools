@@ -1,5 +1,7 @@
 # this class should be considered private
 class nsstools::params {
+  $password_file_name = 'nss-password.txt'
+
   case $::osfamily {
     'redhat': {
       $package_name = ['nss-tools']
