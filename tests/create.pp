@@ -9,9 +9,9 @@ nsstools::create { '/tmp/nsstools':
 
 # Add a certificate and private key from PEM fiels
 nsstools::add_cert_and_key { 'test':
-  certdir  => '/tmp/nsstools',
-  cert     => '/tmp/cert.pem',
-  key      => '/tmp/key.pem',
+  certdir => '/tmp/nsstools',
+  cert    => '/tmp/cert.pem',
+  key     => '/tmp/key.pem',
 }
 
 # You can confirm that things are loaded properly with:

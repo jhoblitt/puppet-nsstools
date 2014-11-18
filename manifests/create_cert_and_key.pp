@@ -26,19 +26,19 @@
 #   }
 #
 define nsstools::create_cert_and_key(
-  $nickname  = $title,
   $subject,
+  $certdir,
+  $nickname  = $title,
   $keytype   = 'rsa',
   $noisefile = '/var/log/messages',
-  $certdir,
 ) {
   include nsstools
   include nsstools::params
 
-  validate_string($nickname)
   validate_string($subject)
-  validate_re($keytype, [ '^rsa', '^dsa', '^ec', '^all' ])
   validate_absolute_path($certdir)
+  validate_string($nickname)
+  validate_re($keytype, [ '^rsa', '^dsa', '^ec', '^all' ])
   validate_absolute_path($noisefile)
 
   $_password_file = "${certdir}/${nsstools::params::password_file_name}"
