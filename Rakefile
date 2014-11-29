@@ -9,10 +9,13 @@ PuppetLint.configuration.ignore_paths = [
   'spec/**/*.pp',
   'tests/**/*.pp',
 ]
+PuppetLint::RakeTask.new :lint do |config|
+  config.pattern          = 'manifests/**/*.pp'
+  config.fail_on_warnings = true
+end
 
 task :default => [
   :syntax,
   :lint,
   :spec,
 ]
-
