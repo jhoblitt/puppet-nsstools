@@ -1,5 +1,32 @@
 
 #### [Current]
+ * [c439a5e](../../commit/c439a5e) - __(Joshua Hoblitt)__ bump version to v1.1.0
+ * [202e4f5](../../commit/202e4f5) - __(Joshua Hoblitt)__ replace Modulefile vs metadata.json
+ * [4a079e5](../../commit/4a079e5) - __(Joshua Hoblitt)__ update travis matrix
+ * [a5c4d09](../../commit/a5c4d09) - __(Joshua Hoblitt)__ update rspec-puppet to v2.0.0
+ * [40303b0](../../commit/40303b0) - __(Joshua Hoblitt)__ update fixtures stdlib to 4.2.0
+ * [c2ebee2](../../commit/c2ebee2) - __(Joshua Hoblitt)__ Merge pull request [#2](../../issues/2) from jhoblitt/feature/cleanups
+
+fix linter warnings
+ * [7e43fbf](../../commit/7e43fbf) - __(Joshua Hoblitt)__ fix linter warnings
+ * [8ac26ef](../../commit/8ac26ef) - __(Joshua Hoblitt)__ add future parser to travis matrix
+ * [4c6a028](../../commit/4c6a028) - __(Joshua Hoblitt)__ Merge pull request [#1](../../issues/1) from itewk/master
+
+FIPS and Self Signed Certs
+ * [34f2193](../../commit/34f2193) - __(Ian Tewksbury)__ Add type for creating a cert and key directly in the NSS DB.
+ * [602fae0](../../commit/602fae0) - __(Ian Tewksbury)__ add option to enable FIPS on the NSS DB.
+ * [91e5c91](../../commit/91e5c91) - __(Joshua Hoblitt)__ restrict rspec-core gem to < 3
+
+To work around rspec 3 being incompatabile with rspec-puppet 1.0.1 (currently,
+the latest release)
+
+    RSpec::Puppet::FunctionMatchers::Run implements a legacy RSpec matcher
+    protocol. For the current protocol you should expose the failure messages
+    via the `failure_message` and `failure_message_when_negated` methods.
+    (Used from /home/jhoblitt/github/puppet-nsstools/spec/functions/nsstools_add_cert_spec.rb:21:in `block (2 levels) in <top (required)>')
+
+#### v1.0.2
+ * [02de101](../../commit/02de101) - __(Joshua Hoblitt)__ bump version to v1.0.2
  * [05d081a](../../commit/05d081a) - __(Joshua Hoblitt)__ [re]add dep on camptocamp/openssl >= 0.2.0
 
 The 0.2.0 release of camptocamp/openssl fixes the problem 0.1.0 had
