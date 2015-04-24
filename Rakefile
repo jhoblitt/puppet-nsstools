@@ -15,7 +15,7 @@ PuppetLint::RakeTask.new :lint do |config|
 end
 
 task :default => [
-  :syntax,
+  :validate,
   :lint,
   :spec,
 ]
