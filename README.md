@@ -143,7 +143,7 @@ nsstools::create { <title>:
 
     `String` Required
 
-    Password to set on the database. There are 
+    Password to set on the database. There are
     [__Security Considerations__](#security-considerations) to be aware of with
     this parameter.
 
@@ -202,7 +202,7 @@ nsstools::add_cert { <title>:
 
  * `certdir`
 
-    `String`/absolute path required 
+    `String`/absolute path required
     Absolute path to the directory to contain the database files.
 
  * `cert`

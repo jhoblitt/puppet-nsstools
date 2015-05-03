@@ -46,7 +46,7 @@ Would effectively define these resources:
       raise(Puppet::ParseError, ":nsstools_add_cert(): " +
         "Second argument must be a hash")
     end
-    
+
     # we need to managle the resource name so multiple instances (and/or the
     # admin server) can reuse the same certs
     certs.each_pair do |nickname, cert|
@@ -57,6 +57,6 @@ Would effectively define these resources:
           'cert'     => cert,
         }
       }])
-    end    
+    end
   end
 end
