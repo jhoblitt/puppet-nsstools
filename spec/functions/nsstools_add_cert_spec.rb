@@ -27,13 +27,13 @@ describe 'nsstools_add_cert', :type => :puppet_function do
     )
 
     alpha = catalogue.resource('Nsstools::Add_cert', '/etc/dirsrv/slapd-ldap1-AlphaSSL CA')
-    alpha[:nickname].should eq 'AlphaSSL CA'
-    alpha[:certdir].should  eq '/etc/dirsrv/slapd-ldap1'
-    alpha[:cert].should     eq '/tmp/alphassl_intermediate.pem'
+    expect(alpha[:nickname]).to eq 'AlphaSSL CA'
+    expect(alpha[:certdir]).to eq '/etc/dirsrv/slapd-ldap1'
+    expect(alpha[:cert]).to eq '/tmp/alphassl_intermediate.pem'
 
     global = catalogue.resource('Nsstools::Add_cert', '/etc/dirsrv/slapd-ldap1-GlobalSign Root CA')
-    global[:nickname].should eq 'GlobalSign Root CA'
-    global[:certdir].should  eq '/etc/dirsrv/slapd-ldap1'
-    global[:cert].should     eq '/tmp/globalsign_root.pem'
+    expect(global[:nickname]).to eq 'GlobalSign Root CA'
+    expect(global[:certdir]).to eq '/etc/dirsrv/slapd-ldap1'
+    expect(global[:cert]).to eq '/tmp/globalsign_root.pem'
   end
 end
