@@ -360,7 +360,9 @@ Adding other Linux distributions and operatingsystems should be trivial.
 
 ## Tested Platforms
 
+ * el5.x
  * el6.x
+ * el7.x
 
 ### Puppet Version Compatibility
 
