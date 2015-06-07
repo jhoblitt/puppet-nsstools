@@ -3,6 +3,8 @@ fixtures:
     stdlib:
       repo: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
       ref:  '4.6.0'
-    openssl: 'https://github.com/camptocamp/puppet-openssl.git'
+    openssl:
+      repo: 'https://github.com/camptocamp/puppet-openssl.git'
+      ref:  '1.3.8'
   symlinks:
     nsstools: "#{source_dir}"
