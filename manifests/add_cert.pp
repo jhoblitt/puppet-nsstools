@@ -36,8 +36,8 @@ define nsstools::add_cert(
 
   exec { "add_cert_${title}":
     path      => ['/usr/bin'],
-    command   => "certutil -d ${certdir} -A -n '${nickname}' -t '${trustargs}' -a -i ${cert}",
-    unless    => "certutil -d ${certdir} -L -n '${nickname}'",
+    command   => "certutil -d ${certdir} -A -n '${nickname}' -t '${trustargs}' -a -i ${cert} -f ${certdir}/nss-password.txt",
+    unless    => "certutil -d ${certdir} -L -n '${nickname}' -f ${certdir}/nss-password.txt",
     logoutput => true,
     require   => [
       Nsstools::Create[$certdir],
