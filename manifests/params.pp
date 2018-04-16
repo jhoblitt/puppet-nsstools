@@ -6,6 +6,9 @@ class nsstools::params {
     'redhat': {
       $package_name = ['nss-tools']
     }
+    'debian': {
+      $package_name = ['libnss3-tools']
+    }
     default: {
       fail("Module ${module_name} is not supported on ${::operatingsystem}")
     }
