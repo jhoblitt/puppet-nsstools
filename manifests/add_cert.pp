@@ -1,10 +1,11 @@
 # Loads a certificate into an NSS database.
 #
 # Parameters:
-#   $certdir   - required - defaults to $title
-#   $cert      - required - path to certificate in PEM format
-#   $nickname  - optional - the nickname for the NSS certificate
-#   $trustargs - optional - defaults to 'CT,,'
+#   $certdir         - required - defaults to $title
+#   $cert            - required - path to certificate in PEM format
+#   $nickname        - optional - the nickname for the NSS certificate
+#   $trustargs       - optional - defaults to 'CT,,'
+#   $certdir_managed - optional - is certdir managed by this module. Defaults to true
 #
 # Actions:
 #   loads certificate and key into the NSS database.
@@ -25,7 +26,8 @@ define nsstools::add_cert(
   $certdir,
   $cert,
   $nickname  = $title,
-  $trustargs = 'CT,,'
+  $trustargs = 'CT,,',
+  Boolean $certdir_managed = true,
 ) {
   include nsstools
 
@@ -40,8 +42,12 @@ define nsstools::add_cert(
     unless    => "certutil -d ${certdir} -L -n '${nickname}'",
     logoutput => true,
     require   => [
-      Nsstools::Create[$certdir],
       Class['nsstools'],
     ],
+  }
+
+  if ($certdir_managed == true) {
+    Nsstools::Create[$certdir]
+    -> Exec["add_cert_${title}"]
   }
 }
