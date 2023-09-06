@@ -1,11 +1,9 @@
 # utility class
 class nsstools (
-  $require_openssl = true,
+  Boolean $require_openssl = true,
 ) {
-  validate_bool($require_openssl)
-
   include nsstools::params
-  ensure_packages($::nsstools::params::package_name)
+  stdlib::ensure_packages($::nsstools::params::package_name)
 
   if $require_openssl {
     include openssl

@@ -32,26 +32,17 @@
 #
 #
 define nsstools::create (
-  $password,
-  $certdir        = $title,
-  $owner          = undef,
-  $group          = undef,
-  $mode           = '0600',
-  $certdir_mode   = '0700',
-  $manage_certdir = true,
-  $enable_fips    = false,
+  String $password,
+  Stdlib::Absolutepath $certdir = $title,
+  Optional[String] $owner = undef,
+  Optional[String] $group = undef,
+  String $mode = '0600',
+  String $certdir_mode = '0700',
+  Boolean $manage_certdir = true,
+  Boolean $enable_fips = false,
 ) {
   include nsstools
   include nsstools::params
-
-  validate_string($password)
-  validate_absolute_path($certdir)
-  validate_string($owner)
-  validate_string($group)
-  validate_string($mode)
-  validate_string($certdir_mode)
-  validate_bool($manage_certdir)
-  validate_bool($enable_fips)
 
   if $manage_certdir {
     file { $certdir:

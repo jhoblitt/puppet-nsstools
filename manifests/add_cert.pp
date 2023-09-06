@@ -22,17 +22,12 @@
 #
 #
 define nsstools::add_cert(
-  $certdir,
-  $cert,
-  $nickname  = $title,
-  $trustargs = 'CT,,'
+  Stdlib::Absolutepath $certdir,
+  Stdlib::Absolutepath $cert,
+  String $nickname  = $title,
+  String $trustargs = 'CT,,'
 ) {
   include nsstools
-
-  validate_absolute_path($certdir)
-  validate_absolute_path($cert)
-  validate_string($nickname)
-  validate_string($trustargs)
 
   exec { "add_cert_${title}":
     path      => ['/usr/bin'],

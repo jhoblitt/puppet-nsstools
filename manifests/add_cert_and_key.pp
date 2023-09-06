@@ -23,17 +23,12 @@
 #     }
 #
 define nsstools::add_cert_and_key (
-  $certdir,
-  $cert,
-  $key,
-  $nickname = $title
+  Stdlib::Absolutepath $certdir,
+  Stdlib::Absolutepath $cert,
+  Stdlib::Absolutepath $key,
+  String $nickname = $title
 ) {
   include nsstools
-
-  validate_absolute_path($certdir)
-  validate_absolute_path($cert)
-  validate_absolute_path($key)
-  validate_string($nickname)
 
   # downcase and change spaces into _s
   $pkcs12_name = downcase(regsubst("${nickname}.p12", '[\s]', '_', 'GM'))
