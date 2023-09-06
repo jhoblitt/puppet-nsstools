@@ -1,26 +1,18 @@
 source 'https://rubygems.org'
 
-if puppetversion = ENV['PUPPET_GEM_VERSION']
-  gem 'puppet', puppetversion, :require => false
-else
-  gem 'puppet', :require => false
+gem "rake"
+gem "puppet", ENV['PUPPET_VERSION'] || '~> 7.25'
+
+group :lint do
+  gem "puppet-lint", "~> 4.0"
+  gem "puppet-syntax", "~> 3.3"
+  gem "metadata-json-lint", "~> 3.0"
 end
 
-if facterversion = ENV['FACTER_GEM_VERSION']
-  gem 'facter', facterversion, :require => false
-else
-  gem 'facter', :require => false
-end
-
-group :development, :test do
-  gem 'rake',                     :require => false
-  # https://github.com/rspec/rspec-core/issues/1864
-  gem 'rspec', '< 3.2.0', {"platforms"=>["ruby_18"]}
-  gem 'puppetlabs_spec_helper',   :require => false
-  gem 'puppet-lint', '>= 1.1.0',  :require => false
-  gem 'puppet-syntax',            :require => false
-  gem 'rspec-puppet', '~> 2.1.0', :require => false
-  gem 'metadata-json-lint',       :require => false
+group :test do
+  gem "rspec-puppet", "~> 3.0"
+  gem "puppetlabs_spec_helper", "~> 6.0.1"
+  gem "semantic_puppet", "~> 1.1.0"
 end
 
 group :beaker do
@@ -28,8 +20,6 @@ group :beaker do
   gem 'beaker',                   :require => false
   gem 'beaker-rspec',             :require => false
   gem 'pry',                      :require => false
-  gem 'travis-lint',              :require => false
-  gem 'puppet-blacksmith',        :require => false
 end
 
 # vim:ft=ruby

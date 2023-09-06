@@ -2,12 +2,12 @@
 class nsstools::params {
   $password_file_name = 'nss-password.txt'
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'redhat': {
       $package_name = ['nss-tools']
     }
     default: {
-      fail("Module ${module_name} is not supported on ${::operatingsystem}")
+      fail("Module ${module_name} is not supported on ${facts['os']['family']}")
     }
   }
 }
